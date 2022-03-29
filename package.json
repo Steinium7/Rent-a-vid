@@ -1,0 +1,32 @@
+{
+  "name": "rent-a-vid",
+  "version": "1.0.0",
+  "description": "Backend for Video Rental Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steinium7/Rent-a-vid.git"
+  },
+  "keywords": [
+    "Rent",
+    "Video",
+    "Backend"
+  ],
+  "author": "Michael Asare Obeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Steinium7/Rent-a-vid/issues"
+  },
+  "homepage": "https://github.com/Steinium7/Rent-a-vid#readme",
+  "devDependencies": {
+    "jshint": "^2.13.4",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "joi": "^17.6.0"
+  }
+}
