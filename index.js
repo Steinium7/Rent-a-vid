@@ -1,42 +1,26 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
+const genres = require('./routes/genres')
+const home = require('./routes/home')
+const customers = require('./routes/customers')
+const movies = require('./routes/movies')
+const rentals = require('./routes/rentals')
+const users = require('./routes/users')
 const app = express()
 
+mongoose.connect('mongodb://localhost/rent-a-vid')
+    .then(()=>{console.log("Connected to Database....!!!!")})
+    .catch((err)=>{console.log(err.message)})
+
 app.use(express.json())
+app.use('/api/genres', genres)
+app.use('/api/customers',customers)
+app.use('/api/movies', movies)
+app.use('/api/rentals', rentals)
+app.use('/api/users')
+app.use('/', home)
 
-genres = []
-
-
-app.get('/', (req, res)=>{
-    res.send("<h1 style='text-center'>Rent-a-vid</h1>")
-});
-
-app.get('/api/genres', (req, res)=>{
-    res.send(genres);
-});
-
-app.post('/api/genres/add', (req, res)=>{
-    genres.push(req.body.name)
-    res.send(genres)
-});
-
-app.put('/api/genres/update', (req, res)=>{
-    const old = genres.indexOf(req.body.nameOld)
-    // console.log(old)
-    // console.log(req.body.nameOld)
-    if (!JSON.stringify(old)) return res.send('Genre Not Available!!')
-
-    genres.splice(old,1,req.body.name)
-    res.send('Done').status(200)
-
-});
-
-app.delete('/api/genres/delete', (req, res)=>{
-    const old = genres.indexOf(req.body.nameOld)
-    if (!JSON.stringify(old)) return res.send('Genre Not Available!!')
-
-    genres.splice(old, 1)
-    res.send('Done').status(200)
-});
-
-app.listen(3000, ()=>{console.log('Listening on Port 3000')})
+port  = process.env.PORT || 3000
+app.listen(port, ()=>{console.log(`Listening on Port ${port}`)})
