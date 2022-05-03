@@ -26,10 +26,15 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.7",
     "express": "^4.17.1",
     "fawn": "^2.1.5",
     "joi": "^17.6.0",
     "joi-objectid": "^4.0.2",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mongoose": "^6.2.10"
   }
 }

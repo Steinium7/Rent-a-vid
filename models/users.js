@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-const { required } = require('joi');
+const passwordComplexity = require('joi-password-complexity');
 
 const User = mongoose.model('users', new mongoose.Schema({
     name:{
@@ -17,12 +17,26 @@ const User = mongoose.model('users', new mongoose.Schema({
     password:String
 }));
 
+
+// to mod the custome validator for less transfer
 function verify(data){
     const Schema = Joi.object({
-        name:Joi.String().minlength(7),
-        email:Joi.String().email().required(),
-        password:Joi.String().required()
-    })
+        name:Joi.string().min(8),
+        email:Joi.string().email().required(),
+        password:Joi
+                .string()
+                .required()
+                .custom((password, helpers)=>{
+                    const check = passwordComplexity().validate(password);
+                    if(check.value == 'password'){
+                        return helpers.message(check.error.details);
+                    }
+                    else{
+                        return true
+                    }
+                })
+    });
+    return Schema.validate(data);
 }
 
 
