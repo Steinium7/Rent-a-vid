@@ -5,16 +5,12 @@ const ObjectId = mongoose.Types.ObjectId
 const {Genre, verify, _} = require('../models/genres')
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin')
+const asyncMiddleware = require('../middleware/async')
 
 
 router.get('/',async (req, res)=>{
-    try {
-        const genres = await Genre.find().sort('name');
-        res.send(genres);
-    } catch (error) {
-        //To log something
-        res.status(500).send('Something failed')
-    }
+    const genres = await Genre.find().sort('name');
+    res.send(genres);
 
 });
 
