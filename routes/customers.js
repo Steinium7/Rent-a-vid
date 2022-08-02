@@ -2,17 +2,18 @@ const express = require('express')
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 const Customer = require('../models/customers')
-
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const router = express.Router();
 
 
 // Joi to be implemented
 
-router.get('/all',async (req, res)=>{
+router.get('/all',[auth,admin],async (req, res)=>{
     res.send(await Customer.find().sort('name'));
 });
 
-router.post('/add', async (req, res)=> {
+router.post('/add',[auth,admin], async (req, res)=> {
     // console.log(req.body)
     if(req.body == {}) return res.send("No data sent .................");
 
@@ -25,7 +26,7 @@ router.post('/add', async (req, res)=> {
     }
 });
 
-router.put('/update/:id',async (req, res)=>{
+router.put('/update/:id',[auth,admin],async (req, res)=>{
     try {
         let result = await Customer.findByIdAndUpdate(new ObjectId(req.params.id), req.body, {new:true})
         if(!result) return res.send("Customer not found") 
@@ -36,7 +37,7 @@ router.put('/update/:id',async (req, res)=>{
     }
 });
 
-router.delete('/delete/:id',async (req, res)=>{
+router.delete('/delete/:id',[auth,admin],async (req, res)=>{
     try {
         let result = await Customer.findByIdAndDelete(new ObjectId(req.params.id))
         if(!result) return res.send("Customer not found") 

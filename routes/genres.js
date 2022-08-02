@@ -3,16 +3,24 @@ const mongoose = require('mongoose')
 const router = express.Router()
 const ObjectId = mongoose.Types.ObjectId
 const {Genre, verify, _} = require('../models/genres')
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin')
 
 
 router.get('/',async (req, res)=>{
-    const genres = await Genre.find().sort('name');
-    res.send(genres);
+    try {
+        const genres = await Genre.find().sort('name');
+        res.send(genres);
+    } catch (error) {
+        //To log something
+        res.status(500).send('Something failed')
+    }
+
 });
 
 //get a single genre by Id
 
-router.post('/add',async (req, res)=>{
+router.post('/add', [auth, admin], async (req, res)=>{
     const check = verify(req.body)
     if (check.error) return res.send(`Error : ${check['error']['details'][0]['message']}`)
     
@@ -28,7 +36,7 @@ router.post('/add',async (req, res)=>{
 
 });
 
-router.put('/update/:id',async (req, res)=>{
+router.put('/update/:id',[auth,admin],async (req, res)=>{
     const check = verify(req.body)
     if (check.error) return res.send(`Error : ${check['error']['details'][0]['message']}`)
 
@@ -42,7 +50,7 @@ router.put('/update/:id',async (req, res)=>{
 
 });
 
-router.delete('/delete/:id',async (req, res)=>{
+router.delete('/delete/:id',[auth,admin],async (req, res)=>{
 
     try {
         const old = await Genre.findByIdAndDelete(new ObjectId(req.params.id));

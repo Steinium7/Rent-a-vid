@@ -3,14 +3,16 @@ const Customer = require('../models/customers')
 const Movie = require('../models/movies')
 const express = require('express');
 const mongoose  = require('mongoose');
-const Fawn = require('fawn')
+const Fawn = require('fawn');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 Fawn.init('mongodb://localhost/rent-a-vid');
 // Fawn.init(mongoose);
 
 const router = express.Router()
 
-router.post('/', async (req, res)=>{
+router.post('/',[auth,admin], async (req, res)=>{
     const check = verify(req.body);
     if(!check) return res.status(400).send('Id not provided (customerId or movieId)');
 
@@ -58,7 +60,7 @@ router.post('/', async (req, res)=>{
 
 });
 
-router.get('/:id', async (req, res)=>{
+router.get('/:id',[auth,admin], async (req, res)=>{
     const rented = await rental.findById(new mongoose.Types.ObjectId(req.params.id));
     if (rented=={}) return res.send('Rental not found');
     res.send(rented);

@@ -1,12 +1,17 @@
 const express = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const {User, verify} = require('../models/users');
+const auth = require('../middleware/auth');
+const mongoose = require('mongoose');
+
 const router = express.Router();
 
+router.get('/get',auth, async (req, res)=>{
+    const user = await User.findById(new mongoose.Types.ObjectId(req.user._id)).select('-password');
+    res.send(user);
 
+});
 
 router.post('/register', async (req, res)=>{
     const check = verify(req.body);
@@ -21,7 +26,9 @@ router.post('/register', async (req, res)=>{
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
-        res.send(_.pick(user, ['name','email']));
+
+        const token = user.generateUserToken();
+        res.header('x-auth-token', token).send(_.pick(user, ['name','email']));
     } catch (error) {
         res.send(error.message)
     }
@@ -38,8 +45,8 @@ router.post('/login', async (req, res)=>{
 
     const pwdCheck =await bcrypt.compare(req.body.password, user.password);
     if (!pwdCheck) return res.status(400).send("Invalid Email or Password");
-    console.log(pwdCheck);
-    const token = jwt.sign({_id:user._id}, config.get('jwtKey'))
+
+    const token = user.generateUserToken();
     res.send(token);
 
 });

@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 
-const User = mongoose.model('users', new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type:String,
         minlength:7,
@@ -14,8 +16,15 @@ const User = mongoose.model('users', new mongoose.Schema({
         unique:true,
         required:true
     },
-    password:String
-}));
+    password:String,
+    isAdmin:Boolean
+});
+
+userSchema.methods.generateUserToken = function(){
+    return jwt.sign({_id:this._id, isAdmin:this.isAdmin}, config.get('jwtKey'))
+}
+
+const User = mongoose.model('users', userSchema);
 
 
 // to mod the custome validator for less transfer
