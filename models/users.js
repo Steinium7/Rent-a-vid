@@ -53,4 +53,4 @@ function verify(data){
 
 
 
-module.exports = {User, verify};
+module.exports = {User, verify, userSchema};
