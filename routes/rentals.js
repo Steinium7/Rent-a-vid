@@ -7,7 +7,7 @@ const Fawn = require('fawn');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 
-Fawn.init('mongodb://localhost/rent-a-vid');
+// Fawn.init('mongodb://localhost/rent-a-vid'); To convert to mongo db implementation
 // Fawn.init(mongoose);
 
 const router = express.Router()
