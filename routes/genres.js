@@ -10,7 +10,7 @@ const asyncMiddleware = require('../middleware/async')
 
 router.get('/',async (req, res)=>{
     const genres = await Genre.find().sort('name');
-    res.send(genres);
+    res.status(200).send(genres);
 });
 
 //get a single genre by Id

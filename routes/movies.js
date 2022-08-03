@@ -4,12 +4,13 @@ const admin = require('../middleware/admin');
 const auth = require('../middleware/auth');
 const { update } = require('../models/movies');
 const ObjectId = mongoose.Types.ObjectId
-const Movie = require('../models/movies')
+const {Movie} = require('../models/movies')
 
 const router = express.Router();
 
 router.get('/all',async (req, res)=>{
-    res.send(await Movie.find())
+    const movies = await Movie.find()
+    res.status(200).send(movies)
 });
 
 router.post('/add',[auth,admin], async (req, res)=>{
