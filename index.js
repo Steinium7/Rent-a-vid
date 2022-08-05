@@ -9,6 +9,6 @@ require('./startup/config')();
 require('./startup/validation')();
 
 port = process.env.PORT || 3000;
-// app.listen(port, ()=>{winston.info(`Listening on Port ${port}`)})
+if (app.get('env') == 'production') app.listen(port, ()=>{winston.info(`Listening on Port ${port}`)})
 
 module.exports = app;

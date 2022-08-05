@@ -15,19 +15,21 @@ afterEach((done) => {
     });
 });
 
-test('GET /api/movies', async () => {             
-    const genre = await Genre.create({ name: 'Action' });
-    const movie = await Movie.create({ title: 'CR7 The movie', genre: genre });
+test('GET /api/movies/all', async () => {             
+    const genre = new Genre({ name: 'Action' });
+    const movie = await Movie.create({ title: 'CR7Themovie', genre: genre });
     
     await supertest(app)
-        .get('/api/movies/all')
+        .get('/api/movies')
         .expect(200)
         .then((response) => {
             // Check type and length
+            
             expect(Array.isArray(response.body)).toBeTruthy();
             expect(response.body.length).toEqual(1);
             // Check data
             expect(response.body[0].title).toBe(movie.title);
-            expect(response.body[0].genre).toBe(movie.genre);
+            let testGenre = response.body[0].genre
+            expect(Array(testGenre)[0]).toMatchObject(genre);
         });
 }, 30000);

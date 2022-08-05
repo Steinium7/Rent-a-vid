@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
-router.get('/get',auth, async (req, res)=>{
+router.get('/get', auth, async (req, res)=>{
     const user = await User.findById(new mongoose.Types.ObjectId(req.user._id)).select('-password');
     res.send(user);
 });
@@ -47,7 +47,6 @@ router.post('/login', async (req, res)=>{
 
     const token = user.generateUserToken();
     res.send(token);
-
 });
 
 
