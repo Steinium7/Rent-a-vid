@@ -30,6 +30,6 @@ test('GET /api/movies/all', async () => {
             // Check data
             expect(response.body[0].title).toBe(movie.title);
             let testGenre = response.body[0].genre
-            expect(Array(testGenre)[0]).toMatchObject(genre);
+            expect(testGenre[0]).toMatchObject({ name: 'Action' });
         });
 }, 30000);
