@@ -35,3 +35,4 @@ describe('Model test', () => {
         expect(verify({ name: '' })).toHaveProperty('value', { name: '' });;
     });
 });
+

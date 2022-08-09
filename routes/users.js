@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/get', auth, async (req, res)=>{
     const user = await User.findById(new mongoose.Types.ObjectId(req.user._id)).select('-password');
-    res.send(user);
+    res.status(200).send(user);
 });
 
 router.post('/register', async (req, res)=>{
@@ -18,7 +18,7 @@ router.post('/register', async (req, res)=>{
 
     try {
         let user = await User.findOne({email:req.body.email});
-        if (user) return res.send("User already Exists!!!");
+        if (user) return res.status(409).send("User already Exists!!!");
 
         user = new User(_.pick(req.body, ['name','email','password']));
         const salt = await bcrypt.genSalt(10);
@@ -42,7 +42,7 @@ router.post('/login', async (req, res)=>{
     if(!user) return res.status(400).send("Invalid Email or Password");
     
 
-    const pwdCheck =await bcrypt.compare(req.body.password, user.password);
+    const pwdCheck = await bcrypt.compare(req.body.password, user.password);
     if (!pwdCheck) return res.status(400).send("Invalid Email or Password");
 
     const token = user.generateUserToken();
