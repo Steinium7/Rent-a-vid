@@ -43,7 +43,7 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "Rentavid" 
+          heroku_app_name: "rent-a-vid" 
           heroku_email: ${{secrets.EMAIL}}
         env:
           app_password: ${{secrets.app_password}}
