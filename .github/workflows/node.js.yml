@@ -48,4 +48,4 @@ jobs:
         env:
           app_password: ${{secrets.app_password}}
           NODE_ENV: 'production'
-          main_db: ${{db}}
+          main_db: ${{secrets.MAIN_DB}}
