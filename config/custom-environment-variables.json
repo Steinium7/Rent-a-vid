@@ -1,3 +1,4 @@
 {
-    "jwtKey":"app_password"
+    "jwtKey": "app_password",
+    "db": "main_db"
 }

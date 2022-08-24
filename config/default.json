@@ -1,4 +1,5 @@
 {
     "jwtKey": "",
-    "Local": true
+    "Local": false,
+    "db": ""
 }
