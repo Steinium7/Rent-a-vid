@@ -44,6 +44,6 @@ jobs:
                   heroku_app_name: 'rent-a-vid-main-api-777'
                   heroku_email: ${{secrets.EMAIL}}
               env:
-                  app_password: ${{secrets.app_password}}
-                  NODE_ENV: 'production'
-                  main_db: ${{secrets.MAIN_DB}}
+                  HD_app_password: ${{secrets.app_password}}
+                  HD_NODE_ENV: 'production'
+                  HD_main_db: ${{secrets.MAIN_DB}}
