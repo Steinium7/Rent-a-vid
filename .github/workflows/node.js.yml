@@ -29,5 +29,4 @@ jobs:
     - name: Start Docker for Mongodb
       run: docker run -d -p 27017:27017 mongo
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm run test
