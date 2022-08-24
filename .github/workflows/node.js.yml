@@ -10,7 +10,7 @@ on:
         branches: ['main']
 
 env:
-    app_password: ${{secrets.app_password}}
+    app_password: ${{secrets.APP_PASSWORD}}
     NODE_ENV: ${{secrets.NODE_ENV}}
 
 jobs:
@@ -44,6 +44,6 @@ jobs:
                   heroku_app_name: 'rent-a-vid-main-api-777'
                   heroku_email: ${{secrets.EMAIL}}
               env:
-                  app_password: ${{secrets.app_password}}
+                  app_password: ${{secrets.APP_PASSWORD}}
                   NODE_ENV: 'production'
                   main_db: ${{secrets.MAIN_DB}}
