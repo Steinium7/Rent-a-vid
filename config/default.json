@@ -1,3 +1,4 @@
 {
-    "jwtKey":""
+    "jwtKey": "",
+    "Local": true
 }

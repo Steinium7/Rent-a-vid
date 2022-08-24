@@ -5,7 +5,7 @@ const app = express();
 require('./startup/logging')();
 if (app.get('env') == 'production') {
     require('./startup/db')();
-    require('./startup/prod');
+    require('./startup/prod')(app);
 }
 require('./startup/routes')(app);
 require('./startup/config')();
