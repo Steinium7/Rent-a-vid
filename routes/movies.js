@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/add', [auth, admin], async (req, res) => {
-    // console.log(req.body)
     if (req.body == {}) return res.send('Data not sent...');
 
     try {
