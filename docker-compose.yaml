@@ -1,0 +1,19 @@
+version: '1.0'
+
+services:
+    mongo-db:
+        image: mongo:5.0.2
+        restart: unless-stopped
+        ports:
+            - 27017:27017
+        volumes:
+            - db:/data/db
+    app:
+        depends_on:
+            - mongo-db
+        build: .
+        restart: unless-stopped
+        ports:
+            - 3000:3000
+volumes:
+    db:
