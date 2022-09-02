@@ -55,4 +55,49 @@ describe('Model test', () => {
                 expect(response.body.title).toBe('Kung-fu panda');
             });
     });
+
+    it('Update movie /api/movies/update/:id', async () => {
+        const genre = new Genre({ name: 'Action' });
+        const movie = await Movie.create({
+            title: 'CR7Themovie',
+            genre: genre,
+        });
+
+        if (movie) {
+            await supertest(app)
+                .put(`/api/movies/update/${String(movie._id)}`)
+                .send({ title: 'TheloneRanger' })
+                .expect(200)
+                .then((response) => {
+                    expect(response.body.title).toBe('TheloneRanger');
+                });
+        }
+    });
+
+    it('Update movie - Not Available', async () => {
+        const id = new ObjectId();
+        await supertest(app)
+            .put(`/api/movies/update/${id}`)
+            .send({ title: 'TheloneRanger' })
+            .expect(404);
+    });
+
+    it('Delete movie /api/movies/delete/:id', async () => {
+        const genre = new Genre({ name: 'Action' });
+        const movie = await Movie.create({
+            title: 'CR7Themovie',
+            genre: genre,
+        });
+
+        if (movie) {
+            await supertest(app)
+                .delete(`/api/movies/delete/${String(movie._id)}`)
+                .expect(200);
+        }
+    });
+
+    it('Delete movie - Not Available', async () => {
+        const id = new ObjectId();
+        await supertest(app).delete(`/api/movies/delete/${id}`).expect(404);
+    });
 });

@@ -34,8 +34,8 @@ router.put('/update/:id', [auth, admin], async (req, res) => {
             req.body,
             { new: true }
         );
-        if (!updatedMovie) return res.send('Movie not found');
-        res.send(updatedMovie).status(200);
+        if (!updatedMovie) return res.status(404).send('Movie not found');
+        res.status(200).send(updatedMovie);
     } catch (error) {
         return res.send(error.message);
     }
@@ -46,8 +46,8 @@ router.delete('/delete/:id', [auth, admin], async (req, res) => {
         const movie = await Movie.findByIdAndDelete(
             new ObjectId(req.params.id)
         );
-        if (!movie) return res.send('Movie not found');
-        res.send(movie).status(200);
+        if (!movie) return res.status(404).send('Movie not found');
+        res.status(200).send(movie);
     } catch (error) {}
 });
 
